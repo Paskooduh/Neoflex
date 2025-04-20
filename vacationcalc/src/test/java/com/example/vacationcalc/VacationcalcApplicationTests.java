@@ -1,45 +1,44 @@
-package com.example.vacationcalc;
+package com.example.vacationcalc.service;
 
-import com.example.vacationcalc.controller.VacationPayController;
-import com.example.vacationcalc.service.VacationPayService;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-class VacationcalcApplicationTests {
+class VacationPayServiceTest {
 
 	@Autowired
-	private VacationPayController vacationPayController;
-
-	@MockBean
-	private VacationPayService vacationPayService;
+    private VacationPayService service;
 
 	@Test
-	void contextLoads() {
-
-		assertThat(vacationPayController).isNotNull();
+    void testCalculateByDates_WithHolidays() {
+        // Период 1-8 января (все дни праздничные)
+        LocalDate start = LocalDate.of(2024, 1, 1);
+        LocalDate end = LocalDate.of(2024, 1, 8); // Исправлено!
+        BigDecimal result = service.calculateByDates(BigDecimal.valueOf(100000), start, end);
+        assertEquals(BigDecimal.ZERO.setScale(2), result);
 	}
 
 	@Test
-	void testCalculateVacationPay() {
+    void testCalculateByDates_WorkingDaysOnly() {
+        LocalDate start = LocalDate.of(2024, 5, 13);
+        LocalDate end = LocalDate.of(2024, 5, 17);
+        BigDecimal result = service.calculateByDates(BigDecimal.valueOf(100000), start, end);
+        assertEquals(BigDecimal.valueOf(14846.42), result);
+    }
 
-		BigDecimal averageSalary = BigDecimal.valueOf(60000);
-		int vacationDays = 10;
-		BigDecimal expectedVacationPay = BigDecimal.valueOf(2047.95); // Ожидаемая сумма отпускных
+    @Test
+    void testCountWorkingDays_MixedPeriod() {
+        LocalDate start = LocalDate.of(2024, 5, 8);
+        LocalDate end = LocalDate.of(2024, 5, 12);
+        BigDecimal result = service.calculateByDates(BigDecimal.valueOf(100000), start, end);
 
-		Mockito.when(vacationPayService.calculateVacationPay(averageSalary, vacationDays))
-				.thenReturn(expectedVacationPay);
 
-		var response = vacationPayController.calculateVacationPay(averageSalary, vacationDays);
-
-		assertThat(response.getVacationPay()).isEqualTo(expectedVacationPay);
+        assertEquals(5938, result.intValue());
 	}
 }
