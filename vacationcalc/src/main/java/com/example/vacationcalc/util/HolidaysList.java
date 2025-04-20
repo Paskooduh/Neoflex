@@ -26,6 +26,7 @@ public class HolidaysList {
             LocalDate.of(2024, 6, 12),
 
             LocalDate.of(2024, 11, 4)
+            //fsd
     );
 
     public static boolean isHoliday(LocalDate date) {
