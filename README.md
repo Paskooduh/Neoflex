@@ -23,8 +23,20 @@ Response:
 
 ![{9B26A310-BE2C-4ACD-8BF2-135D7A8F8C31}](https://github.com/user-attachments/assets/8f98945b-04be-459a-a792-371e7bfe5e58)
 
+Запрос со средней ЗП и датами отпуска
+http://localhost:8080/calculate?averageSalary=100000&startDate=2024-05-13&endDate=2024-05-17
+Response:
+
+![image](https://github.com/user-attachments/assets/216f6989-7382-4a21-942a-1b738385ab2f)
+
+
 **Postman**
 
 Запрос со средней ЗП и количеством дней отпуска: 
 
 ![{C95C45E8-A78F-49A4-A444-7FE80918254E}](https://github.com/user-attachments/assets/3ef4f2f8-85d2-4aea-8def-0d05c2f359d2)
+
+Запрос со средней ЗП и датами отпуска
+
+![{F63CE31D-45F0-47CE-9556-30DD60FA1209}](https://github.com/user-attachments/assets/6fce3959-89c8-41a4-9119-8960a3c941f4)
+
